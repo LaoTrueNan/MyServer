@@ -10,9 +10,9 @@ package gzq.tomcat.core.loader;
  */
 public interface Loader {
     //
-
+    Loader getLoader();
     //
-
+    Class<?> loadClass(String... clazz);
     //
 
 }
