@@ -88,7 +88,7 @@ public class ZQResponse {
         // 先查询请求的资源名称
         String wanted = request.getUrl();
         if (wanted.equalsIgnoreCase(HttpServer.SHUTDOWN)) {
-            String res = SUCCESS + separator + HTML + separator + "<p>closed</p>";
+            String res = SUCCESS + separator + HTML + separator +separator + "<p>closed</p>";
             oos.write(res.getBytes(StandardCharsets.UTF_8));
             oos.close();
         } else {
@@ -102,7 +102,7 @@ public class ZQResponse {
                     oos.write(res.getBytes(StandardCharsets.UTF_8));
                 } else {
                     FileInputStream fis = new FileInputStream(wantedFile);
-                    String res = SUCCESS + separator + HTML + separator + "<p>";
+                    String res = SUCCESS + separator + TEXT + separator+ separator ;
                     oos.write(res.getBytes(StandardCharsets.UTF_8));
                     byte[] buf = new byte[1024];
                     int len = fis.read(buf, 0, 1014);
@@ -110,7 +110,6 @@ public class ZQResponse {
                         oos.write(buf, 0, len);
                         len = fis.read(buf, 0, 1024);
                     }
-                    oos.write("</p>\r\n".getBytes(StandardCharsets.UTF_8));
                 }
             } catch (IOException e) {
                 e.printStackTrace();
