@@ -21,9 +21,8 @@ public class ServletLoader implements Loader {
     public ServletLoader() {
         try {
             URL[] urls = new URL[1];
-        URLStreamHandler urlStreamHandler = null;
             File classPath = new File(WEB_ROOT);
-            urls[0] = new URL(null, new URL("file", null,classPath.getCanonicalPath() + File.separator).toString(),urlStreamHandler);
+            urls[0] = new URL(null, new URL("file", null,classPath.getCanonicalPath() + File.separator).toString(), (URLStreamHandler) null);
             classLoader = new URLClassLoader(urls);
         } catch (IOException e) {
 
@@ -32,15 +31,11 @@ public class ServletLoader implements Loader {
 
     @Override
     public Loader getLoader() {
-        return null;
+        return new ServletLoader();
     }
 
     @Override
     public Class<?> loadClass(String... clazz) {
         return null;
-    }
-
-    public static void main(String[] args) {
-        System.out.println(System.getProperty("user.dir"));
     }
 }

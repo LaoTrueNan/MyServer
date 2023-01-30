@@ -17,5 +17,12 @@ public class StandardConnector implements Connector {
         sm.getString("connector.loaded");
     }
 
+    public static void main(String[] args) {
+        String a = "Host: localhost:8087";
+        String[] split = a.split(":\\s");
+        for (int i = 0; i < split.length; i++) {
+            System.out.println(split[i]+"●●●●"+i);
+        }
+    }
 
 }

@@ -6,9 +6,18 @@
 ```
 
 ### structure
->src
->>gzq.tomcat
->>> base  #base implementations reside in\
->>> core  #core fields interfaces\
-> > > util  #tools\
-> > > Bootstrap.java #bootStrap class\
+```html
+<pre>
+  └─gzq
+    └─tomcat
+        ├─base
+        ├─core
+        │  ├─connector
+        │  ├─container
+        │  ├─loader
+        │  ├─logger
+        │  └─watcher
+        └─util
+</pre>
+
+```

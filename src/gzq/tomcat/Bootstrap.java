@@ -18,6 +18,9 @@ public class Bootstrap {
 
     public static void main(String[] args) {
         // create connector then start the thread.
+        // use command arguments to run the server
 
+
+        //
     }
 }
