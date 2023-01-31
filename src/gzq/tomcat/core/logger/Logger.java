@@ -1,18 +1,20 @@
 package gzq.tomcat.core.logger;
 
+import java.io.IOException;
+
 /**
  * @author guo
- * @date 2022/12/21 16:29
+ * @date 2023/1/31 8:27
  */
 
 public interface Logger {
 
-    // which container the logger belongs to
-    void log(Throwable e,int level);
+    void info(String info) throws IOException;
 
-    void log(String msg,int level);
+    void debug(String debugInfo) throws IOException;
 
-    void log(String msg);
+    void warn(String warning) throws IOException;
 
-    void log(String msg,Throwable e,int level);
+    void error(Throwable e, String msg) throws IOException;
+
 }

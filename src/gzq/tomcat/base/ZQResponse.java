@@ -1,17 +1,21 @@
 package gzq.tomcat.base;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import gzq.tomcat.Response;
+import gzq.tomcat.core.logger.Logger;
+import gzq.tomcat.util.ConsoleLogger;
+
+import javax.servlet.ServletOutputStream;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.Locale;
 
 /**
  * @author guo
  * @date 2023/1/29 11:18
  */
 
-public class ZQResponse {
+public class ZQResponse implements Response {
+    private final Logger logger = new ConsoleLogger();
 
     /*STATUS CODES*/
     /**
@@ -91,9 +95,14 @@ public class ZQResponse {
             String res = SUCCESS + separator + HTML + separator +separator + "<p>closed</p>";
             oos.write(res.getBytes(StandardCharsets.UTF_8));
             oos.close();
+        } else if(wanted.contains("%20")) {
+            // 输出中文时不能使用字节流,一个汉字是两个字节,拆开之后必然导致乱码
+            String res = BADREQUEST + separator + HTML + separator + separator + "<!doctype html><html><head><meta charset=\"utf-8\"></head><body><h3>请求路径不能含有空格!</h3></body></html>";
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(oos, StandardCharsets.UTF_8);
+            outputStreamWriter.append(res);
+            oos.close();
+            outputStreamWriter.close();
         } else {
-
-
             File wantedFile = new File(WEBROOT + File.separator + wanted);
 
             try {
@@ -112,15 +121,92 @@ public class ZQResponse {
                     }
                 }
             } catch (IOException e) {
-                e.printStackTrace();
-                // TODO 加全局日志
+                logger.error(e,"Error occurred while operating files");
             } finally {
                 oos.close();
             }
         }
     }
 
+    @Override
+    public String getCharacterEncoding() {
+        return null;
+    }
 
+    @Override
+    public String getContentType() {
+        return null;
+    }
+
+    @Override
+    public ServletOutputStream getOutputStream() throws IOException {
+        return null;
+    }
+
+    @Override
+    public PrintWriter getWriter() throws IOException {
+        return null;
+    }
+
+    @Override
+    public void setCharacterEncoding(String charset) {
+
+    }
+
+    @Override
+    public void setContentLength(int len) {
+
+    }
+
+    @Override
+    public void setContentLengthLong(long length) {
+
+    }
+
+    @Override
+    public void setContentType(String type) {
+
+    }
+
+    @Override
+    public void setBufferSize(int size) {
+
+    }
+
+    @Override
+    public int getBufferSize() {
+        return 0;
+    }
+
+    @Override
+    public void flushBuffer() throws IOException {
+
+    }
+
+    @Override
+    public void resetBuffer() {
+
+    }
+
+    @Override
+    public boolean isCommitted() {
+        return false;
+    }
+
+    @Override
+    public void reset() {
+
+    }
+
+    @Override
+    public void setLocale(Locale loc) {
+
+    }
+
+    @Override
+    public Locale getLocale() {
+        return null;
+    }
 }
 
 
