@@ -6,19 +6,13 @@ import gzq.tomcat.Response;
 
 import javax.servlet.ServletException;
 import java.io.IOException;
-import java.net.Socket;
 
 /**
  * @author guo
- * @date 2022/12/22 8:42
+ * @date 2023/2/8 16:13
  */
 
-public class StandardProcessor implements Processor {
-
-    void process(Socket socket){
-        /*according */
-    }
-
+public class ServletProcessor implements Processor {
     @Override
     public void process(Request request, Response response) throws ServletException, IOException {
 

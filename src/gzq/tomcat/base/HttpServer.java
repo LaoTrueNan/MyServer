@@ -1,5 +1,6 @@
 package gzq.tomcat.base;
 
+import javax.servlet.ServletException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -18,11 +19,17 @@ public class HttpServer {
 
     private boolean running = true;
 
-    public void await(){
+    private int port = 8087;
+
+    public void setPort(int port) {
+        this.port = port;
+    }
+
+    public void await() throws IOException {
         ServerSocket socket = null;
 
         try {
-            socket = new ServerSocket(8087,1,InetAddress.getByName("127.0.0.1"));
+            socket = new ServerSocket(port,1,InetAddress.getByName("127.0.0.1"));
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -39,27 +46,42 @@ public class HttpServer {
 
                 ZQRequest zqRequest = new ZQRequest(iis);
                 zqRequest.parse();
+                if(zqRequest.getUrl()==null){
+                    continue;
+                }
 
                 ZQResponse zqResponse = new ZQResponse(oos);
                 zqResponse.setRequest(zqRequest);
 
-                zqResponse.staticResources();
+                StandardProcessor standardProcessor = new StandardProcessor();
+                standardProcessor.process(zqRequest,zqResponse);
+
                 if(SHUTDOWN.equalsIgnoreCase(zqRequest.getUrl())){
                     running = false;
                     socket.close();
                 }
-
+            } catch (ServletException e) {
+                e.printStackTrace();
+            } finally {
                 iis.close();
                 client.close();
-            } catch (IOException e) {
-                e.printStackTrace();
             }
 
         }
     }
 
-    public static void main(String[] args) {
+
+
+    public static void main(String[] args) throws IOException {
         HttpServer httpServer = new HttpServer();
+        if(args[0]!=null){
+            try {
+                int i = Integer.parseInt(args[0]);
+                httpServer.setPort(i);
+            } catch (NumberFormatException ignored) {
+
+            }
+        }
         httpServer.await();
     }
 }

@@ -84,6 +84,7 @@ public class ZQRequest implements Request {
         return s;
     }
 
+    @Override
     public String getUrl() {
         return url;
     }
@@ -179,6 +180,7 @@ public class ZQRequest implements Request {
 
     @Override
     public String getRemoteAddr() {
+
         return null;
     }
 

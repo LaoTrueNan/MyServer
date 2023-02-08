@@ -21,7 +21,7 @@ public class ZQStaticProcessor implements Processor {
     @Override
     public void process(Request request, Response response) throws ServletException, IOException {
         try {
-            ZQRequest zqRequest = (ZQRequest) request;
+            response.sendStaticResources();
         } catch (ClassCastException e) {
 
             e.printStackTrace();

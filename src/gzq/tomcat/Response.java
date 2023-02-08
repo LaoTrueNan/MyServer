@@ -11,5 +11,7 @@ public interface Response extends ServletResponse {
     /**
      * TODO some getters used for getting info of a response.
      */
+    void sendStaticResources();
 
+    void responseServlet();
 }

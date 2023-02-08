@@ -207,35 +207,18 @@ public class ZQResponse implements Response {
     public Locale getLocale() {
         return null;
     }
+
+    @Override
+    public void sendStaticResources() {
+        try {
+            staticResources();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void responseServlet() {
+
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
